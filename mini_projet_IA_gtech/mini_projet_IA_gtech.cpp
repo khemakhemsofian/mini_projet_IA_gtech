@@ -1,20 +1,61 @@
-// mini_projet_IA_gtech.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
-//
+#include <SFML/Graphics.hpp>
+#include "Player.hpp"
+#include "Enemy.hpp"
+#include "Grid.hpp"
+#include <vector>
+#include <memory>
 
-#include <iostream>
+const int WINDOW_WIDTH = 800; // D�finir la largeur de la fen�tre
+const int WINDOW_HEIGHT = 600; // D�finir la hauteur de la fen�tre
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int main() {
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Jeu SFML - IA Ennemis");
+    window.setFramerateLimit(60);
+
+    Player player(400, 400, sf::Color::Blue, 10);
+    std::vector<std::unique_ptr<Enemy>> enemies;
+    enemies.push_back(std::make_unique<Enemy>(100, 100, 10));
+    enemies.push_back(std::make_unique<Enemy>(700, 100, 100));
+    Grid grid;
+    grid.loadFromFile("map.txt");
+
+    std::vector<Entity*> neededEntities;
+    neededEntities.push_back(&player);
+
+    sf::Clock clock;
+
+    while (window.isOpen()) {
+        sf::Time dt = clock.restart();
+        float deltaTime = dt.asSeconds();
+
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        // Convertir le vecteur de unique_ptr en un vecteur de pointeurs bruts
+        std::vector<Entity*> enemyPointers;
+        for (const auto& enemy : enemies) {
+            enemyPointers.push_back(enemy.get());
+        }
+
+        // D�finir le vecteur neededEntities
+
+        player.update(deltaTime, grid, neededEntities, enemyPointers);
+        for (auto& enemy : enemies) {
+            enemy->update(deltaTime, grid, neededEntities, enemyPointers);
+        }
+
+        window.clear();
+        grid.draw(window);
+        window.draw(player.shape);
+        for (const auto& enemy : enemies) {
+            if (enemy->isAlive()) {
+                window.draw(enemy->shape);
+            }
+        }
+        window.display();
+    }
+    return 0;
 }
-
-// Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
-// Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
-
-// Astuces pour bien démarrer : 
-//   1. Utilisez la fenêtre Explorateur de solutions pour ajouter des fichiers et les gérer.
-//   2. Utilisez la fenêtre Team Explorer pour vous connecter au contrôle de code source.
-//   3. Utilisez la fenêtre Sortie pour voir la sortie de la génération et d'autres messages.
-//   4. Utilisez la fenêtre Liste d'erreurs pour voir les erreurs.
-//   5. Accédez à Projet > Ajouter un nouvel élément pour créer des fichiers de code, ou à Projet > Ajouter un élément existant pour ajouter des fichiers de code existants au projet.
-//   6. Pour rouvrir ce projet plus tard, accédez à Fichier > Ouvrir > Projet et sélectionnez le fichier .sln.
