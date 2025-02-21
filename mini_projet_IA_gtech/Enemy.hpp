@@ -1,6 +1,7 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
-
+#include <cmath>
+#include <iostream>
 #include "Entity.hpp"
 
 class Enemy : public Entity {

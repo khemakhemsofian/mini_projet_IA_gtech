@@ -1,5 +1,5 @@
 #include "Enemy.hpp"
-#include <cmath>
+
 
 Enemy::Enemy(float x, float y, int hp) : Entity(x, y, sf::Color::Red, hp) {}
 
@@ -30,7 +30,7 @@ void Enemy::update(float deltaTime, Grid& grid, std::vector<Entity*> players) {
     velocity = direction * SPEED;
     shape.move(velocity * deltaTime);
      if (shape.getGlobalBounds().intersects(playerProche->shape.getGlobalBounds())) {
-        playerProche->takeDamage(DAMAGE);
+		 std::cout << "Player touché" << std::endl;
     }
 }
 
