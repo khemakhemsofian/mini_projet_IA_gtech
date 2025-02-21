@@ -3,24 +3,20 @@
 #include "Enemy.hpp"
 #include "Grid.hpp"
 #include <vector>
-#include <memory>
 
-const int WINDOW_WIDTH = 800; // Définir la largeur de la fenêtre
-const int WINDOW_HEIGHT = 600; // Définir la hauteur de la fenêtre
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Jeu SFML - IA Ennemis");
     window.setFramerateLimit(60);
 
-    Player player(400, 400, sf::Color::Blue, 10);
-    std::vector<std::unique_ptr<Enemy>> enemies;
-    enemies.push_back(std::make_unique<Enemy>(100, 100, 10));
-    enemies.push_back(std::make_unique<Enemy>(700, 100, 100));
+    Player player(400, 400, 10);
+    std::vector<Entity*> enemies;
+    enemies.push_back(new Enemy(100, 100, 10));
+    enemies.push_back(new Enemy(700, 100, 100));
     Grid grid;
     grid.loadFromFile("map.txt");
-
-    std::vector<Entity*> neededEntities;
-    neededEntities.push_back(&player);
 
     sf::Clock clock;
 
@@ -34,17 +30,9 @@ int main() {
                 window.close();
         }
 
-        // Convertir le vecteur de unique_ptr en un vecteur de pointeurs bruts
-        std::vector<Entity*> enemyPointers;
-        for (const auto& enemy : enemies) {
-            enemyPointers.push_back(enemy.get());
-        }
-
-        // Définir le vecteur neededEntities
-
-        player.update(deltaTime, grid, neededEntities, enemyPointers);
+        player.update(deltaTime, grid, enemies);
         for (auto& enemy : enemies) {
-            enemy->update(deltaTime, grid, neededEntities, enemyPointers);
+            enemy->update(deltaTime, grid, { &player });
         }
 
         window.clear();

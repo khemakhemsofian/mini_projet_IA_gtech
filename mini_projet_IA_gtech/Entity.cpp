@@ -1,6 +1,7 @@
 #include "Entity.hpp"
 
 Entity::Entity(float x, float y, sf::Color color, int hp) : health(hp) {
+    shape.setSize({ 40, 40 });
     shape.setPosition(x, y);
     shape.setFillColor(color);
 }
@@ -11,8 +12,4 @@ bool Entity::isAlive() const {
 
 void Entity::takeDamage(int damage) {
     health -= damage;
-}
-
-bool Entity::operator==(const Entity& other) const {
-    return shape.getPosition() == other.shape.getPosition() && health == other.health;
 }

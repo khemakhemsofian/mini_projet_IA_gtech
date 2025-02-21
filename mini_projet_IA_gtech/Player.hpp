@@ -1,8 +1,8 @@
-// Player.hpp
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
+
 #include "Entity.hpp"
-#include <vector>
+
 
 class Player : public Entity {
 public:
@@ -11,9 +11,9 @@ public:
     static constexpr float ATTACK_COOLDOWN = 0.5f;
     float attackTimer;
 
-    Player(float x, float y, sf::Color color, int hp);
+    Player(float x, float y, int hp);
     void attack(std::vector<Entity*> enemies);
-    void update(float deltaTime, Grid& grid, std::vector<Entity*>& neededEntities, std::vector<Entity*>& enemies) override;
+    void update(float deltaTime, Grid& grid, std::vector<Entity*> enemies) override;
 };
 
 #endif // PLAYER_HPP

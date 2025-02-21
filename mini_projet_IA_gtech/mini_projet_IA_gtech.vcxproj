@@ -137,30 +137,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Astar.cpp" />
-    <ClCompile Include="BehaviourTree.cpp" />
+    <Text Include="map.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="FSM.cpp" />
-    <ClCompile Include="GOAP.cpp" />
     <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="mini_projet_IA_gtech.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Astar.hpp" />
-    <ClInclude Include="BehaviourTree.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
-    <ClInclude Include="FSM.hpp" />
-    <ClInclude Include="GOAP.hpp" />
     <ClInclude Include="Grid.hpp" />
     <ClInclude Include="Node.hpp" />
+    <ClInclude Include="Pathfinding.hpp" />
     <ClInclude Include="Player.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="map.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
